@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Who Cat</string>
+    <string name="search">Search</string>
+    <string name="error_message">
+        No cats found :( please try again, you know how they are.
+    </string>
+    <string name="enter_search">
+        "Enter the first three letters of a cat breed, then click search"
+    </string><string name="hint">
+        "Click search and your cat will show up here!"
+    </string>
+
+</resources>
