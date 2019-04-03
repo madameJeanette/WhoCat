@@ -9,5 +9,6 @@
     </string><string name="hint">
         "Click search and your cat will show up here!"
     </string>
+    <string name="action_reset">Reset</string>
 
 </resources>

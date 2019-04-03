@@ -30,7 +30,8 @@ import java.util.Scanner;
 public class NetworkUtils {
 
     final static String GITHUB_BASE_URL =
-            "https://api.thecatapi.com/v1/breeds/search";
+           "https://api.thecatapi.com/v1/breeds/search/";
+         //     "https://api.thecatapi.com/v1/images/search";
 
     final static String PARAM_QUERY = "q";
 
@@ -42,13 +43,13 @@ public class NetworkUtils {
     final static String sortBy = "name";
 
     /**
-     * Builds the URL used to query GitHub.
+     * Builds the URL used to query the cat api.
      *
      * @param githubSearchQuery The keyword that will be queried for.
      * @return The URL to use to query the GitHub server.
      */
     public static URL buildUrl(String githubSearchQuery) {
-        // COMPLETED (1) Fill in this method to build the proper GitHub query URL
+        // Fill in this method to build the proper query URL
         Uri builtUri = Uri.parse(GITHUB_BASE_URL).buildUpon()
                 .appendQueryParameter(PARAM_QUERY, githubSearchQuery)
                 .appendQueryParameter(PARAM_SORT, sortBy)
