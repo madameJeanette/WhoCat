@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -39,16 +40,35 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.NumberViewHolder
 
     private static final String TAG = CatAdapter.class.getSimpleName();
 
+    final private ListItemClickListener mOnClickListener;
+    private static int viewHolderCount;
+
     private int mNumberItems;
+
+    // COMPLETED (1) Add an interface called ListItemClickListener
+    // COMPLETED (2) Within that interface, define a void method called onListItemClick that takes an int as a parameter
+    /**
+
+     * The interface that receives onClick messages.
+     */
+
+     public interface ListItemClickListener {
+        void onListItemClick(int clickedItemIndex);
+    }
+
+    // COMPLETED (4) Add a ListItemClickListener as a parameter to the constructor and store it in mOnClickListener
 
     /**
      * Constructor for GreenAdapter that accepts a number of items to display and the specification
      * for the ListItemClickListener.
-     *
      * @param numberOfItems Number of items to display in list
+     *
      */
-    public CatAdapter(int numberOfItems) {
+    public CatAdapter(int numberOfItems, ListItemClickListener listener) {
         mNumberItems = numberOfItems;
+        mOnClickListener = listener;
+        viewHolderCount = 0;
+
     }
 
     /**
@@ -73,8 +93,14 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.NumberViewHolder
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachToParentImmediately);
         NumberViewHolder viewHolder = new NumberViewHolder(view);
 
+        viewHolder.viewHolderIndex.setText("ViewHolder index: " + viewHolderCount);
+
+        viewHolderCount++;
+        Log.d(TAG, "onCreateViewHolder: number of ViewHolders created: "
+                + viewHolderCount);
         return viewHolder;
     }
+
 
     /**
      * OnBindViewHolder is called by the RecyclerView to display the data at the specified
@@ -107,11 +133,16 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.NumberViewHolder
     /**
      * Cache of the children views for a list item.
      */
-    class NumberViewHolder extends RecyclerView.ViewHolder {
+
+    // COMPLETED (5) Implement OnClickListener in the NumberViewHolder class
+    class NumberViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
         //  Within NumberViewHolder, create a TextView variable called listItemNumberView
-        // Will display the position in the list, ie 0 through getItemCount() - 1
         TextView listItemNumberView;
+        // Will display the position in the list, ie 0 through getItemCount() - 1
+
+        TextView viewHolderIndex;
 
         // Create a constructor for NumberViewHolder that accepts a View called itemView as a parameter
         /**
@@ -122,10 +153,12 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.NumberViewHolder
          *                 {@link CatAdapter#onCreateViewHolder(ViewGroup, int)}
          */
         public NumberViewHolder(View itemView) {
-            // Within the constructor, call super(itemView) and then find listItemNumberView by ID
             super(itemView);
 
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
+            viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
+            // COMPLETED (7) Call setOnClickListener on the View passed into the constructor (use 'this' as the OnClickListener)
+            itemView.setOnClickListener(this);
         }
 
         // ithin the NumberViewHolder class, create a void method called bind that accepts an int parameter called listIndex
@@ -139,5 +172,12 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.NumberViewHolder
             //  Be careful to get the String representation of listIndex, as using setText with an int does something different
             listItemNumberView.setText(String.valueOf(listIndex));
         }
+        // COMPLETED (6) Override onClick, passing the clicked item's position (getAdapterPosition()) to mOnClickListener via its onListItemClick method
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            mOnClickListener.onListItemClick(clickedPosition);
+        }
     }
 }
+

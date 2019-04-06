@@ -1,9 +1,8 @@
 package com.example.whocat;
-
-import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -18,9 +17,10 @@ import com.example.whocat.utilities.NetworkUtils;
 
 import java.io.IOException;
 import java.net.URL;
-
-public class MainActivity extends AppCompatActivity {
- //   private TextView mCatBreedsTextView;
+// COMPLETED (8) Implement GreenAdapter.ListItemClickListener from the MainActivity
+public class MainActivity extends AppCompatActivity
+        implements CatAdapter.ListItemClickListener {
+   // private TextView mCatBreedsTextView;
 
     private EditText mSearchBoxEditText;
 
@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private CatAdapter mAdapter;
     private RecyclerView mNumbersList;
 
+    private Toast mToast;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
         mNumbersList = (RecyclerView) findViewById(R.id.rv_cats);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mNumbersList.setLayoutManager(layoutManager);
+
+
         mNumbersList.setHasFixedSize(true);
-        mAdapter = new CatAdapter(NUM_LIST_ITEMS);
+
+        mAdapter = new CatAdapter(NUM_LIST_ITEMS, this);
 
         mNumbersList.setAdapter(mAdapter);
 
@@ -59,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
         //get a reference to mUrlDisplayTextView
         mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
         // get a reference to mSearchResultsTextView
-       // mSearchResultsTextView = (TextView) findViewById(R.id.tv_cat_search_results_json);
+        mSearchResultsTextView = (TextView) findViewById(R.id.tv_cat_search_results_json);
         // Get a reference to the error TextView using findViewById
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
-        //  Get a reference to the ProgressBar using findViewById
+         // Get a reference to the ProgressBar using findViewById
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
 
@@ -118,10 +124,12 @@ public class MainActivity extends AppCompatActivity {
         // Then, show the error
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
-            // Create a class called GithubQueryTask that extends AsyncTask<URL, Void, String>
+
+
+    // Create a class called QueryTask that extends AsyncTask<URL, Void, String>
             public class GithubQueryTask extends AsyncTask<URL, Void, String> {
 
-                // COMPLETED (26) Override onPreExecute to set the loading indicator to visible
+                // Override onPreExecute to set the loading indicator to visible
                 @Override
                 protected void onPreExecute() {
                     super.onPreExecute();
@@ -140,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     return githubSearchResults;
                 }
 
-                // Override onPostExecute to display the results in the TextView
+            //     Override onPostExecute to display the results in the TextView
                 @Override
                 protected void onPostExecute(String githubSearchResults) {
                         //  As soon as the loading is complete, hide the loading indicator
@@ -171,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
             switch (itemId) {
 
                 case R.id.action_refresh:
-                    mAdapter = new CatAdapter(NUM_LIST_ITEMS);
+                    // COMPLETED (14) Pass in this as the ListItemClickListener to the GreenAdapter constructor
+                    mAdapter = new CatAdapter(NUM_LIST_ITEMS, this);
                     mNumbersList.setAdapter(mAdapter);
                     return true;
 
@@ -181,6 +190,43 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+
         }
+    // COMPLETED (10) Override ListItemClickListener's onListItemClick method
+    // This is where we receive our callback from
+     // {@link
+
+     // callback is invoked when you click on an item in the list.
+
+     // @param clickedItemIndex Index in the list of the item that was clicked.
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        // COMPLETED (11) In the beginning of the method, cancel the Toast if it isn't null
+        /*
+         * Even if a Toast isn't showing, it's okay to cancel it. Doing so
+         * ensures that our new Toast will show immediately, rather than
+         * being delayed while other pending Toasts are shown.
+         *
+         * Comment out these three lines, run the app, and click on a bunch of
+         * different items if you're not sure what I'm talking about.
+         */
+        if (mToast != null) {
+            mToast.cancel();
+        }
+
+        // COMPLETED (12) Show a Toast when an item is clicked, displaying that item number that was clicked
+        /*
+         * Create a Toast and store it in our Toast field.
+         * The Toast that shows up will have a message similar to the following:
+         *
+         *                     Item #42 clicked.
+         */
+        String toastMessage = "Item #" + clickedItemIndex + " clicked.";
+        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
+
+        mToast.show();
     }
+
+}
 
