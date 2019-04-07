@@ -170,7 +170,10 @@ public class MainActivity extends AppCompatActivity
         mSearchResultsTextView.setVisibility(View.INVISIBLE);
         // Then, show the error
 
+
     }
+
+
 
     // Create a class called QueryTask that extends AsyncTask<URL, Void, String>
             public class CatQueryTask extends AsyncTask<URL, Void, String> {

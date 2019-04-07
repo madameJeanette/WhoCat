@@ -1,23 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp">
-
-    <EditText
-        android:id="@+id/et_search_box"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/enter_search"
-        android:textSize="22sp" />
+    android:layout_height="match_parent">
 
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="421dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="88dp"
+            android:layout_marginBottom="86dp"
+            android:contentDescription="@string/catitle"
+            android:text="@string/catitle"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/adopt-button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<TextView-->
+
+        <EditText
+            android:id="@+id/et_search_box"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="18dp"
+            android:autofillHints=""
+            android:hint="@string/enter_search"
+            android:inputType=""
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/adopt-button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+        <Button
+            android:id="@+id/adopt-button"
+            android:layout_width="150dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="11dp"
+            android:onClick="onClickOpenAdoptButton"
+            android:text="@string/adopt"
+            app:layout_constraintBottom_toTopOf="@+id/gif-button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/gif-button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="325dp"
+            android:layout_marginEnd="3dp"
+            android:onClick="onClickOpenWebpageGifButton"
+            android:text="@string/gif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/geo-button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="11dp"
+            android:onClick="onClickOpenAddressButton"
+            android:text="@string/geo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/adopt-button" />
+
+        <TextView
+            android:id="@+id/tv_error_message_display"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="21dp"
+            android:padding="16dp"
+            android:text="@string/error_message"
+            android:textSize="22sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_cat_search_results_json"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_cat_search_results_json" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="61dp"
+            android:layout_marginTop="16dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/tv_error_message_display"
+            app:layout_constraintTop_toTopOf="@+id/tv_cat_search_results_json" />
+
+        <TextView
+            android:id="@+id/tv_cat_search_results_json"
+            android:layout_width="0dp"
+            android:layout_height="99dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="70dp"
+            android:hint="@string/hint"
+            android:padding="16dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_error_message_display"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_cats"
+            android:layout_width="0dp"
+            android:layout_height="118dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="195dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="194dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_error_message_display"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_search_box">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <!--<TextView-->
         <!--android:id="@+id/tv_url_display"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
@@ -25,63 +132,4 @@
         <!--android:text="@string/hint"-->
         <!--android:textSize="22sp" />-->
 
-    <Button
-        android:id="@+id/gif-button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickOpenWebpageGifButton"
-        android:text="@string/gif"/>
-
-    <Button
-        android:id="@+id/adopt-button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickOpenAdoptButton"
-        android:text="@string/adopt"/>
-
-    <Button
-        android:id="@+id/geo-button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onClickOpenAddressButton"
-        android:text="@string/geo"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <TextView
-        android:id="@+id/tv_cat_search_results_json"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="20sp" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_cats"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-</ScrollView>
-    <TextView
-        android:id="@+id/tv_error_message_display"
-        android:textSize="22sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/error_message"
-        android:visibility="invisible" />
-    <ProgressBar
-        android:id="@+id/pb_loading_indicator"
-        android:layout_height="42dp"
-        android:layout_width="42dp"
-        android:layout_gravity="center"
-        android:visibility="invisible" />
-    </FrameLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
