@@ -17,14 +17,14 @@ import com.example.whocat.utilities.NetworkUtils;
 
 import java.io.IOException;
 import java.net.URL;
-// COMPLETED (8) Implement GreenAdapter.ListItemClickListener from the MainActivity
+// Implement CatAdapter.ListItemClickListener from the MainActivity
 public class MainActivity extends AppCompatActivity
         implements CatAdapter.ListItemClickListener {
    // private TextView mCatBreedsTextView;
 
     private EditText mSearchBoxEditText;
 
-    private TextView mUrlDisplayTextView;
+//    private TextView mUrlDisplayTextView;
 
     private TextView mSearchResultsTextView;
     //  Create a variable to store a reference to the error message TextView
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
 
         //get a reference to mUrlDisplayTextView
-        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
+   //     mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
         // get a reference to mSearchResultsTextView
         mSearchResultsTextView = (TextView) findViewById(R.id.tv_cat_search_results_json);
         // Get a reference to the error TextView using findViewById
@@ -88,13 +88,13 @@ public class MainActivity extends AppCompatActivity
 //        for (String catBreed : catBreeds) {
 //            mCatBreedsTextView.append(catBreed + "\n\n\n");
 
-        private void makeGithubSearchQuery() {
-            String githubQuery = mSearchBoxEditText.getText().toString();
-            URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
-            mUrlDisplayTextView.setText(githubSearchUrl.toString());
+        private void makeSearchQuery() {
+            String catQuery = mSearchBoxEditText.getText().toString();
+            URL catSearchUrl = NetworkUtils.buildUrl(catQuery);
+         //   mUrlDisplayTextView.setText(githubSearchUrl.toString());
 
-            // Create a new GithubQueryTask and call its execute method, passing in the url to query
-            new GithubQueryTask().execute(githubSearchUrl);
+            // Create a new CatQueryTask and call its execute method, passing in the url to query
+            new CatQueryTask().execute(catSearchUrl);
         }
     /**
      * This method will make the View for the JSON data visible and
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity
 
 
     // Create a class called QueryTask that extends AsyncTask<URL, Void, String>
-            public class GithubQueryTask extends AsyncTask<URL, Void, String> {
+            public class CatQueryTask extends AsyncTask<URL, Void, String> {
 
                 // Override onPreExecute to set the loading indicator to visible
                 @Override
@@ -139,24 +139,24 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 protected String doInBackground(URL... params) {
                     URL searchUrl = params[0];
-                    String githubSearchResults = null;
+                    String searchResults = null;
                     try {
-                        githubSearchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
+                        searchResults = NetworkUtils.getResponseFromHttpUrl(searchUrl);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    return githubSearchResults;
+                    return searchResults;
                 }
 
             //     Override onPostExecute to display the results in the TextView
                 @Override
-                protected void onPostExecute(String githubSearchResults) {
+                protected void onPostExecute(String searchResults) {
                         //  As soon as the loading is complete, hide the loading indicator
                         mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (githubSearchResults != null && !githubSearchResults.equals("")) {
+            if (searchResults != null && !searchResults.equals("[]")) {
                     //Call showJsonDataView if we have valid, non-null results
                     showJsonDataView();
-                    mSearchResultsTextView.setText(githubSearchResults);
+                    mSearchResultsTextView.setText(searchResults);
                 } else {
                     // Call showErrorMessage if the result is null in onPostExecute
                     showErrorMessage();
@@ -179,20 +179,20 @@ public class MainActivity extends AppCompatActivity
             switch (itemId) {
 
                 case R.id.action_refresh:
-                    // COMPLETED (14) Pass in this as the ListItemClickListener to the GreenAdapter constructor
+                    //  Pass in this as the ListItemClickListener to the CatAdapter constructor
                     mAdapter = new CatAdapter(NUM_LIST_ITEMS, this);
                     mNumbersList.setAdapter(mAdapter);
                     return true;
 
             case R.id.action_search:
 
-                makeGithubSearchQuery(); //Call makeSearchQuery when the search menu item is clicked.
+                makeSearchQuery(); //Call makeSearchQuery when the search menu item is clicked.
                 return true;
             }
             return super.onOptionsItemSelected(item);
 
         }
-    // COMPLETED (10) Override ListItemClickListener's onListItemClick method
+    // Override ListItemClickListener's onListItemClick method
     // This is where we receive our callback from
      // {@link
 
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        // COMPLETED (11) In the beginning of the method, cancel the Toast if it isn't null
+        // In the beginning of the method, cancel the Toast if it isn't null
         /*
          * Even if a Toast isn't showing, it's okay to cancel it. Doing so
          * ensures that our new Toast will show immediately, rather than
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity
             mToast.cancel();
         }
 
-        // COMPLETED (12) Show a Toast when an item is clicked, displaying that item number that was clicked
+        // COMPLETED Show a Toast when an item is clicked, displaying that item number that was clicked
         /*
          * Create a Toast and store it in our Toast field.
          * The Toast that shows up will have a message similar to the following:
