@@ -6,9 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="16dp"
->
-
+    android:paddingTop="16dp">
 
     <EditText
         android:id="@+id/et_search_box"
@@ -16,16 +14,28 @@
         android:layout_height="wrap_content"
         android:hint="@string/enter_search"
         android:textSize="22sp" />
-   <!--<TextView-->
+
+
+
+    <!--<TextView-->
         <!--android:id="@+id/tv_url_display"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_marginTop="8dp"-->
         <!--android:text="@string/hint"-->
         <!--android:textSize="22sp" />-->
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickOpenWebpageButton"
+        android:text="@string/gif"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <TextView
         android:id="@+id/tv_cat_search_results_json"

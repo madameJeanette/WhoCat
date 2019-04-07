@@ -11,5 +11,6 @@
         "Click search and your cat will show up here!"
     </string>
     <string name="action_reset">Reset</string>
+    <string name="gif">Get random cat gif</string>
 
 </resources>
