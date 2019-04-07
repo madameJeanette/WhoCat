@@ -26,11 +26,25 @@
         <!--android:textSize="22sp" />-->
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/gif-button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickOpenWebpageButton"
+        android:onClick="onClickOpenWebpageGifButton"
         android:text="@string/gif"/>
+
+    <Button
+        android:id="@+id/adopt-button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickOpenAdoptButton"
+        android:text="@string/adopt"/>
+
+    <Button
+        android:id="@+id/geo-button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickOpenAddressButton"
+        android:text="@string/geo"/>
 
     <FrameLayout
         android:layout_width="match_parent"

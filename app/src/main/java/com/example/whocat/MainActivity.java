@@ -96,13 +96,43 @@ public class MainActivity extends AppCompatActivity
      *
      * @param v Button that was clicked.
      */
-    public void onClickOpenWebpageButton(View v){
-        // COMPLETED (5) Create a String that contains a URL ( make sure it starts with http:// or https:// )
+    public void onClickOpenWebpageGifButton(View v){
+        // Create a String that contains a URL ( make sure it starts with http:// or https:// )
         String urlAsString = "https://randomcatgifs.com/";
 
-        // COMPLETED (6) Replace the Toast with a call to openWebPage, passing in the URL String from the previous step
+        // Replace the Toast with a call to openWebPage, passing in the URL String from the previous step
         openWebPage(urlAsString);
 
+    }  public void onClickOpenAdoptButton(View v){
+        // Create a String that contains a URL ( make sure it starts with http:// or https:// )
+        String urlAsString = "https://ikzoekbaas.dierenbescherming.nl/";
+
+        // Replace the Toast with a call to openWebPage, passing in the URL String from the previous step
+        openWebPage(urlAsString);
+
+    }
+
+
+    /**
+     * This method is called when the Open Location in Map button is clicked. It will open the
+     * a map to the location represented by the variable addressString using implicit Intents.
+     *
+     * @param v Button that was clicked.
+     */
+    public void onClickOpenAddressButton(View v) {
+        // Store an address in a String
+
+        String addressString = "Groene Kruisweg 14a, 3281 KB Numansdorp";
+
+        // Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("geo")
+                .path("0,0")
+                .appendQueryParameter("q", addressString);
+        Uri addressUri = builder.build();
+
+        // Replace the Toast with a call to showMap, passing in the Uri from the previous step
+        showMap(addressUri);
     }
 
         private void makeSearchQuery() {
@@ -140,10 +170,7 @@ public class MainActivity extends AppCompatActivity
         mSearchResultsTextView.setVisibility(View.INVISIBLE);
         // Then, show the error
 
-
     }
-
-
 
     // Create a class called QueryTask that extends AsyncTask<URL, Void, String>
             public class CatQueryTask extends AsyncTask<URL, Void, String> {
@@ -281,7 +308,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    // COMPLETED (1) Create a method called openWebPage that accepts a String as a parameter
+    //  Create a method called openWebPage that accepts a String as a parameter
     /**
      * This method fires off an implicit Intent to open a webpage.
      *
@@ -289,21 +316,21 @@ public class MainActivity extends AppCompatActivity
      *            scheme of the URI expected with this Intent according to the Common Intents page
      */
     private void openWebPage(String url) {
-        // COMPLETED (2) Use Uri.parse to parse the String into a Uri
+        // Use Uri.parse to parse the String into a Uri
         /*
          * We wanted to demonstrate the Uri.parse method because its usage occurs frequently. You
          * could have just as easily passed in a Uri as the parameter of this method.
          */
         Uri webpage = Uri.parse(url);
 
-        // COMPLETED (3) Create an Intent with Intent.ACTION_VIEW and the webpage Uri as parameters
+        //  Create an Intent with Intent.ACTION_VIEW and the webpage Uri as parameters
         /*
          * Here, we create the Intent with the action of ACTION_VIEW. This action allows the user
          * to view particular content. In this case, our webpage URL.
          */
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
 
-        // COMPLETED (4) Verify that this Intent can be launched and then call startActivity
+        // Verify that this Intent can be launched and then call startActivity
         /*
          * This is a check we perform with every implicit Intent that we launch. In some cases,
          * the device where this code is running might not have an Activity to perform the action
@@ -313,6 +340,36 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         }
     }
+// COMPLETED (1) Create a method called showMap with a Uri as the single parameter
+    /**
+     * This method will fire off an implicit Intent to view a location on a map.
+     *
+     * When constructing implicit Intents, you can use either the setData method or specify the
+     * URI as the second parameter of the Intent's constructor,
+     * as I do in {@link #openWebPage(String)}
+     *
+     * @param geoLocation The Uri representing the location that will be opened in the map
+     */
+    private void showMap(Uri geoLocation) {
+        // COMPLETED (2) Create an Intent with action type, Intent.ACTION_VIEW
+        /*
+         * Again, we create an Intent with the action, ACTION_VIEW because we want to VIEW the
+         * contents of this Uri.
+         */
+        Intent intent = new Intent(Intent.ACTION_VIEW);
 
+        // COMPLETED (3) Set the data of the Intent to the Uri passed into this method
+        /*
+         * Using setData to set the Uri of this Intent has the exact same affect as passing it in
+         * the Intent's constructor. This is simply an alternate way of doing this.
+         */
+        intent.setData(geoLocation);
+
+
+        // COMPLETED (4) Verify that this Intent can be launched and then call startActivity
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+}
 }
 
