@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Who Cat</string>
+    <string name="search">Search</string>
+    <string name="error_message">
+        No cats found :( please try again, you know how they are.
+    </string>
+    <string name="enter_search">
+        "Enter the first three letters of a cat breed, then click search"
+    </string>
+    <string name="hint">
+        "Click search and your cat will show up here!"
+    </string>
+    <string name="action_reset">Reset</string>
+
+    <string name="adopt">Adopt now!</string>
+    <string name="geo">Find our pet shelter!</string>
+    <string name="gif">Get a random cat gif!</string>
+    <string name="catimg">cute  mis eye colored kitten</string>
+    <string name="catitle">Learn everything about cat breeds!</string>
+    <!--<string name="catimg">https://www.adoptapet.com/RACRS/wp-content/uploads/sites/1031/2016/03/1446990164_C-cat-wallpapers-desktop-hd-pao-images-cat-wallpaper-hd-wallpapers-free-download-for-walls-home-tumblr-border-android-1920x1080-iphone-1024x5761.jpg</string>-->
+
+</resources>
