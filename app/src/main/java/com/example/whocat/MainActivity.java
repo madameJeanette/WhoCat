@@ -320,6 +320,8 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
                 public void deliverResult(String catJson) {
                     mCatsJson = catJson;
                     super.deliverResult(catJson);
+                    onListItemClick(1);
+
             }
         };
     }  //  Override onLoadFinished
@@ -403,17 +405,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
             mToast.cancel();
         }
 
-        // Show a Toast when an item is clicked, displaying that item number that was clicked
-        /*
-         * Create a Toast and store it in our Toast field.
-         * The Toast that shows up will have a message similar to the following:
-         *
-         *                     Item #42 clicked.
-//         */
-//        String toastMessage = "Item #" + clickedItemIndex + " clicked.";
-//        mToast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-//
-//        mToast.show();
+
         // Retrieve the text from the EditText and store it in a variable
         /* We'll first get the text entered by the user in the EditText */
         String textEntered = mSearchResultsTextView.getText().toString();
