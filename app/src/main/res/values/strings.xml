@@ -17,6 +17,12 @@
     <string name="gif">Get a random cat gif!</string>
     <string name="catimg">cute  mis eye colored kitten</string>
     <string name="catitle">Learn everything about cat breeds!</string>
-    <!--<string name="catimg">https://www.adoptapet.com/RACRS/wp-content/uploads/sites/1031/2016/03/1446990164_C-cat-wallpapers-desktop-hd-pao-images-cat-wallpaper-hd-wallpapers-free-download-for-walls-home-tumblr-border-android-1920x1080-iphone-1024x5761.jpg</string>-->
 
+
+    <!-- Value in SharedPreferences for English language -->
+    <string name="pref_EN_value" translatable="false">English</string>
+
+    <!-- Value in SharedPreferences for Dutch language -->
+    <string name="pref_NL_value" translatable="false">Dutch</string>
+    <string name="action_settings">Settings</string>
 </resources>

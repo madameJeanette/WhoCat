@@ -1,5 +1,6 @@
 package com.example.whocat;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.content.Context;
@@ -65,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+     //start sound on app start
+        MediaPlayer mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.bensoundbuddy);
+        mediaPlayer.start();
 
         /*
          * Using findViewById, we get a reference to our TextView from xml. This allows us to
@@ -252,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
             /* This String will contain the raw JSON from the results of our Cat api search */
             String mCatsJson;
 
+
             // Override onStartLoading
             @Override
             protected void onStartLoading() {
@@ -279,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
                  * loading indicator to the user
                  */
                 mLoadingIndicator.setVisibility(View.VISIBLE);
+
 
                 // Force a load
                 forceLoad();
@@ -316,6 +322,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
                 public void deliverResult(String catJson) {
                     mCatsJson = catJson;
                     super.deliverResult(catJson);
+
 
             }
         };
@@ -362,6 +369,11 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
         public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
             switch (itemId) {
+
+                case R.id.action_settings:
+                    Intent startSettingsActivity = new Intent(this, SettingsActivity.class);
+                    startActivity(startSettingsActivity);
+                    return true;
 
                 case R.id.action_refresh:
                     //  Pass in this as the ListItemClickListener to the CatAdapter constructor
