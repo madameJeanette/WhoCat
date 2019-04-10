@@ -27,6 +27,9 @@ import java.net.URL;
 // implement LoaderManager.LoaderCallbacks<String> on MainActivity
 public class MainActivity extends AppCompatActivity implements  LoaderManager.LoaderCallbacks<String>, CatAdapter.ListItemClickListener {
 
+    //  Create a static final key to store the search's raw JSON
+    /* A constant to save and restore the JSON that is being displayed */
+    private static final String SEARCH_QUERY_URL_EXTRA = "query";
    // private TextView mCatBreedsTextView;
    // Create a constant int to uniquely identify your loader. Call it CAT_SEARCH_LOADER
    /*
@@ -53,10 +56,8 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
     private Toast mToast;
     // Create a static final key to store the query's URL
     /* A constant to save and restore the URL that is being displayed */
-    private static final String SEARCH_QUERY_URL_EXTRA = "query";
 
-    //  Create a static final key to store the search's raw JSON
-    /* A constant to save and restore the JSON that is being displayed */
+
 
 
 
@@ -83,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
 
         //get a reference to mUrlDisplayTextView
-        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
+       mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
         // get a reference to mSearchResultsTextView
         mSearchResultsTextView = (TextView) findViewById(R.id.tv_cat_search_results_json);
         // Get a reference to the error TextView using findViewById
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+      //  mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
          // Get a reference to the ProgressBar using findViewById
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
@@ -95,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
         // If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
         if (savedInstanceState != null) {
             String queryUrl = savedInstanceState.getString(SEARCH_QUERY_URL_EXTRA);
-
 
             mUrlDisplayTextView.setText(queryUrl);
 
@@ -126,14 +126,9 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
      *
      * @param v Button that was clicked.
      */
-    public void onClickOpenWebpageGifButton(View v){
-        // Create a String that contains a URL ( make sure it starts with http:// or https:// )
-        String urlAsString = "https://randomcatgifs.com/";
 
-        // Replace the Toast with a call to openWebPage, passing in the URL String from the previous step
-        openWebPage(urlAsString);
 
-    }  public void onClickOpenAdoptButton(View v){
+      public void onClickOpenAdoptButton(View v){
         // Create a String that contains a URL ( make sure it starts with http:// or https:// )
         String urlAsString = "https://ikzoekbaas.dierenbescherming.nl/";
 
@@ -180,19 +175,19 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
              * was the simplest.
              */
             if (TextUtils.isEmpty(catQuery)) {
-                mUrlDisplayTextView.setText("No cats found :( please try again, you know how they are.");
+                mSearchResultsTextView.setText("No cats found :( please try again, you know how they are.");
                 return;
             }
 
-            URL githubSearchUrl = NetworkUtils.buildUrl(catQuery);
-            mUrlDisplayTextView.setText(githubSearchUrl.toString());
+            URL catSearchUrl = NetworkUtils.buildUrl(catQuery);
+            mUrlDisplayTextView.setText(catSearchUrl.toString());
 
             // Remove the call to execute the AsyncTask
 
             // Create a bundle called queryBundle
             Bundle queryBundle = new Bundle();
             // Use putString with SEARCH_QUERY_URL_EXTRA as the key and the String value of the URL as the value
-            queryBundle.putString(SEARCH_QUERY_URL_EXTRA, githubSearchUrl.toString());
+            queryBundle.putString(SEARCH_QUERY_URL_EXTRA, catSearchUrl.toString());
 
             /*
              * Now that we've created our bundle that we will pass to our Loader, we need to decide
@@ -211,9 +206,9 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
             //Call getSupportLoaderManager and store it in a LoaderManager variable
             LoaderManager loaderManager = getSupportLoaderManager();
             //  Get our Loader by calling getLoader and passing the ID we specified
-            Loader<String> githubSearchLoader = loaderManager.getLoader(CAT_SEARCH_LOADER);
+            Loader<String> catSearchLoader = loaderManager.getLoader(CAT_SEARCH_LOADER);
             // f the Loader was null, initialize it. Else, restart it.
-            if (githubSearchLoader == null) {
+            if (catSearchLoader == null) {
                 loaderManager.initLoader(CAT_SEARCH_LOADER, queryBundle, this);
             } else {
                 loaderManager.restartLoader(CAT_SEARCH_LOADER, queryBundle, this);
@@ -227,12 +222,12 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
      * Since it is okay to redundantly set the visibility of a View, we don't
      * need to check whether each view is currently visible or invisible.
      */
-    private void showJsonDataView() {
-        // First, make sure the error is invisible
-        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        // Then, make sure the JSON data is visible
-        mSearchResultsTextView.setVisibility(View.VISIBLE);
-    }
+//    private void showJsonDataView() {
+//        // First, make sure the error is invisible
+//        mErrorMessageDisplay.setVisibility(View.INVISIBLE);
+//        // Then, make sure the JSON data is visible
+//        mSearchResultsTextView.setVisibility(View.VISIBLE);
+//    }
 
     // Create a method called showErrorMessage to show the error and hide the data
     /**
@@ -264,6 +259,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
                 // If args is null, return.
                 /* If no arguments were passed, we don't have a query to perform. Simply return. */
                 if (args == null) {
+
                     return;
                 }
 
@@ -320,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
                 public void deliverResult(String catJson) {
                     mCatsJson = catJson;
                     super.deliverResult(catJson);
-                    onListItemClick(1);
 
             }
         };
@@ -341,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
             showErrorMessage();
         } else {
             mSearchResultsTextView.setText(data);
-            showJsonDataView();
+        //    showJsonDataView();
         }
     }
 

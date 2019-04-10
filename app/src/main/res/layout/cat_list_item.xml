@@ -26,4 +26,6 @@
         android:textColor="#000"
         tools:text="ViewHolder instance: 7" />
 
+
+
 </FrameLayout>
