@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="colorName">
+        <!--<item name="0">Cute</item>-->
+        <!--<item name="1">Dark</item>-->
+
+
+    <!--</string-array>-->
+    <!--<string-array name="colorCode">-->
+        <!--<item name="0">#ff0000</item>-->
+        <!--<item name="1">#111111</item>-->
+
+    </string-array>
+</resources>

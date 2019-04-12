@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.LinearLayout;
 import com.example.whocat.utilities.NetworkUtils;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ import java.net.URL;
 // Implement CatAdapter.ListItemClickListener from the MainActivity
 // implement LoaderManager.LoaderCallbacks<String> on MainActivity
 public class MainActivity extends AppCompatActivity implements  LoaderManager.LoaderCallbacks<String>, CatAdapter.ListItemClickListener {
-
+private LinearLayout LL;
     //  Create a static final key to store the search's raw JSON
     /* A constant to save and restore the JSON that is being displayed */
     private static final String SEARCH_QUERY_URL_EXTRA = "query";
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
     * This number will uniquely identify our Loader and is chosen arbitrarily. You can change this
     * to any number you like, as long as you use the same variable name.
     */
-    private static final int CAT_SEARCH_LOADER = 22;
+
+   private TextView mCatBreedsTextView;
+   private static final int CAT_SEARCH_LOADER = 22;
 
     private EditText mSearchBoxEditText;
 
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
 
     private TextView mSearchResultsTextView;
     //  Create a variable to store a reference to the error message TextView
-    private TextView mErrorMessageDisplay;
+   // private TextView mErrorMessageDisplay;
 
     // Create a ProgressBar variable to store a reference to the ProgressBar
     private ProgressBar mLoadingIndicator;
@@ -66,9 +69,10 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     //start sound on app start
-        MediaPlayer mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.bensoundbuddy);
-        mediaPlayer.start();
+        LL = findViewById(R.id.linearLayout);
+        //start sound on app start
+//        MediaPlayer mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.bensoundbuddy);
+//        mediaPlayer.start();
 
         /*
          * Using findViewById, we get a reference to our TextView from xml. This allows us to
@@ -88,13 +92,13 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
         mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
 
         //get a reference to mUrlDisplayTextView
-       mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
+        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
         // get a reference to mSearchResultsTextView
         mSearchResultsTextView = (TextView) findViewById(R.id.tv_cat_search_results_json);
         // Get a reference to the error TextView using findViewById
-      //  mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+        //  mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
-         // Get a reference to the ProgressBar using findViewById
+        // Get a reference to the ProgressBar using findViewById
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         // If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
@@ -109,21 +113,23 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
          * Initialize the loader
          */
         getSupportLoaderManager().initLoader(CAT_SEARCH_LOADER, null, this);
+
+
+        mCatBreedsTextView = (TextView) findViewById(R.id.tv_cat_breeds);
+        /*
+         * This String array contains names of cat breeds.
+         */
+        String[] catBreeds = Cat.getCatBreeds();
+        /*
+         * Iterate through the array and append the Strings to the TextView.
+         * the "\n\n\n" after the String is to give visual separation between each String in the
+         * TextView.
+         */
+        for (String catBreed : catBreeds) {
+            mCatBreedsTextView.append(catBreed + "\n\n\n");
+
+        }
     }
-
-//        mCatBreedsTextView = (TextView) findViewById(R.id.tv_cat_breeds);
-//        /*
-//         * This String array contains names of cat breeds.
-//         */
-//        String[] catBreeds = Cat.getCatBreeds();
-//        /*
-//         * Iterate through the array and append the Strings to the TextView.
-//         * the "\n\n\n" after the String is to give visual separation between each String in the
-//         * TextView.
-//         */
-//        for (String catBreed : catBreeds) {
-//            mCatBreedsTextView.append(catBreed + "\n\n\n");
-
     /**
      * This method is called when the Open Website button is clicked. It will open the website
      * specified by the URL represented by the variable urlAsString using implicit Intents.
@@ -375,11 +381,11 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
                     startActivity(startSettingsActivity);
                     return true;
 
-                case R.id.action_refresh:
-                    //  Pass in this as the ListItemClickListener to the CatAdapter constructor
-                    mAdapter = new CatAdapter(NUM_LIST_ITEMS, this);
-                    mNumbersList.setAdapter(mAdapter);
-                    return true;
+//                case R.id.action_refresh:
+//                    //  Pass in this as the ListItemClickListener to the CatAdapter constructor
+//                    mAdapter = new CatAdapter(NUM_LIST_ITEMS, this);
+//                    mNumbersList.setAdapter(mAdapter);
+//                    return true;
 
             case R.id.action_search:
 
@@ -525,6 +531,17 @@ public class MainActivity extends AppCompatActivity implements  LoaderManager.Lo
         outState.putString(SEARCH_QUERY_URL_EXTRA, queryUrl);
 
 
+    }
+
+    @Override
+    protected void onResume(){
+        if(SettingsActivity.CHANGE_BC(this)){
+            LL.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundLight));
+        }
+        else if(!(SettingsActivity.CHANGE_BC(this))){
+            LL.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundDark));
+        }
+     super.onResume();
     }
 }
 

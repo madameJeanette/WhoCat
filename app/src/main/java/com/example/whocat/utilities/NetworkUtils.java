@@ -32,7 +32,7 @@ public class NetworkUtils {
     final static String CAT_BASE_URL =
            "https://api.thecatapi.com/v1/breeds/search/";
          //     "https://api.thecatapi.com/v1/images/search";
-
+         //   "https://cataas.com/cat";
 
     final static String PARAM_QUERY = "q";
 
@@ -41,7 +41,7 @@ public class NetworkUtils {
      * Default: results are sorted by best match if no field is specified.
      */
     final static String PARAM_SORT = "sort";
-    final static String sortBy = "name";
+    final static String sortBy = "cute";
 
     /**
      * Builds the URL used to query the cat api.

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +9,9 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@color/background_color"
+    >
 
 
     <ImageView
@@ -27,6 +30,19 @@
         android:text="@string/catitle"
         android:textSize="24sp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="76dp">
+
+        <TextView
+            android:id="@+id/tv_cat_breeds"
+            android:layout_width="376dp"
+            android:layout_height="wrap_content"
+            android:text="@string/scrollhint"
+            android:textSize="18sp"
+            android:visibility="visible" />
+    </ScrollView>
+
     <EditText
         android:id="@+id/et_search_box"
         android:layout_width="379dp"
@@ -36,7 +52,6 @@
         android:inputType=""
         android:textSize="18sp" />
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="76dp">
@@ -45,7 +60,7 @@
     <TextView
         android:id="@+id/tv_cat_search_results_json"
         android:layout_width="376dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/hint"
         android:textSize="18sp" />
 

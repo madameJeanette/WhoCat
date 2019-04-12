@@ -10,11 +10,11 @@
     app:showAsAction="ifRoom"
     android:title="@string/search"/>
 
-    <item
-        android:id="@+id/action_refresh"
-        android:orderInCategory="2"
-        android:title="@string/action_reset"
-        app:showAsAction="ifRoom"/>
+    <!--<item-->
+        <!--android:id="@+id/action_refresh"-->
+        <!--android:orderInCategory="2"-->
+        <!--android:title="@string/action_reset"-->
+        <!--app:showAsAction="ifRoom"/>-->
 
     <item
         android:id="@+id/action_settings"
