@@ -22,13 +22,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.LinearLayout;
 import com.example.whocat.utilities.NetworkUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 // Implement CatAdapter.ListItemClickListener from the MainActivity
 // implement LoaderManager.LoaderCallbacks<String> on MainActivity
 public class MainActivity extends AppCompatActivity implements  LoaderManager.LoaderCallbacks<String>, CatAdapter.ListItemClickListener {
-private LinearLayout LL;
+
+    private LinearLayout LL;
     //  Create a static final key to store the search's raw JSON
     /* A constant to save and restore the JSON that is being displayed */
     private static final String SEARCH_QUERY_URL_EXTRA = "query";
@@ -106,6 +113,7 @@ private LinearLayout LL;
             String queryUrl = savedInstanceState.getString(SEARCH_QUERY_URL_EXTRA);
 
             mUrlDisplayTextView.setText(queryUrl);
+
 
         }
         // Initialize the loader with GITHUB_SEARCH_LOADER as the ID, null for the bundle, and this for the callback
@@ -198,7 +206,7 @@ private LinearLayout LL;
             Bundle queryBundle = new Bundle();
             // Use putString with SEARCH_QUERY_URL_EXTRA as the key and the String value of the URL as the value
             queryBundle.putString(SEARCH_QUERY_URL_EXTRA, catSearchUrl.toString());
-
+             System.out.println(catSearchUrl);
             /*
              * Now that we've created our bundle that we will pass to our Loader, we need to decide
              * if we should restart the loader (if the loader already existed) or if we need to
@@ -207,7 +215,7 @@ private LinearLayout LL;
              * We do this by first store the support loader manager in the variable loaderManager.
              * All things related to the Loader go through through the LoaderManager. Once we have a
              * hold on the support loader manager, (loaderManager) we can attempt to access our
-             * githubSearchLoader. To do this, we use LoaderManager's method, "getLoader", and pass in
+             * SearchLoader. To do this, we use LoaderManager's method, "getLoader", and pass in
              * the ID we assigned in its creation. You can think of this process similar to finding a
              * View by ID. We give the LoaderManager an ID and it returns a loader (if one exists). If
              * one doesn't exist, we tell the LoaderManager to create one. If one does exist, we tell
@@ -281,6 +289,8 @@ private LinearLayout LL;
                  * cached results, force a load.
                  */
                 if (mCatsJson != null) {
+
+
                     deliverResult(mCatsJson);
                 } else {
 
@@ -314,7 +324,9 @@ private LinearLayout LL;
                 /* Parse the URL from the passed in String and perform the search */
                 try {
                     URL catUrl = new URL(searchQueryUrlString);
+
                     String catSearchResults = NetworkUtils.getResponseFromHttpUrl(catUrl);
+
                     return catSearchResults;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -325,12 +337,28 @@ private LinearLayout LL;
                 // Override deliverResult and store the data in mGithubJson
                 //Call super.deliverResult after storing the data
                 @Override
-                public void deliverResult(String catJson) {
-                    mCatsJson = catJson;
-                    super.deliverResult(catJson);
+                public void deliverResult(String catSearchResults) {
+
+                    mCatsJson = catSearchResults;
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(mCatsJson);
+                        String name = jsonObject.getString("name");
+                        System.out.println(name);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
 
-            }
+
+
+//                    Gson gson = new Gson();
+//                    Foo thing;
+//                    System.out.println(mCatsJson);
+ super.deliverResult(catSearchResults);
+//
+//
+           }
         };
     }  //  Override onLoadFinished
     @Override
@@ -345,13 +373,32 @@ private LinearLayout LL;
          * If the results are null, we assume an error has occurred. There are much more robust
          * methods for checking errors, but we wanted to keep this particular example simple.
          */
-        if (null == data) {
+        if (data == null) {
             showErrorMessage();
         } else {
+
             mSearchResultsTextView.setText(data);
-        //    showJsonDataView();
+            onListItemClick(1);
+
+            //    showJsonDataView();
+//            class name {
+//                @SerializedName("name")
+//                private String name;
+//                public void setName(String name) {
+//                    this.name = name;
+//                }
+//                public String getName(){
+//                    return name;
+//                }
+//            }
+//            Gson gson = new Gson();
+//            name name = gson.fromJson(data, name.class);
+//           System.out.println("Name is "+name.getName());
+//
         }
     }
+
+
 
     // Override onLoaderReset as it is part of the interface we implement, but don't do anything in this method
     @Override
@@ -421,6 +468,7 @@ private LinearLayout LL;
 
         // Retrieve the text from the EditText and store it in a variable
         /* We'll first get the text entered by the user in the EditText */
+
         String textEntered = mSearchResultsTextView.getText().toString();
 
         Context context = MainActivity.this;

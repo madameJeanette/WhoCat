@@ -10,6 +10,7 @@ public final class Cat {
 
     public static String[] getCatBreeds() {
         return new String[] {
+                "",
                 "Sphinx",
                 "Chalico",
                 "Abyssinian",

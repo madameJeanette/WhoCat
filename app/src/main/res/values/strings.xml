@@ -11,12 +11,12 @@
         "Click search and your cat will show up here!"
     </string>
     <string name="scrollhint">
-        "Scroll through some cat breeds here
-"
+        "Scroll through some cat breeds here"
     </string>
 
 
     <string name="adopt">Adopt now!</string>
+
     <string name="geo">Find our pet shelter!</string>
     <string name="gif">Get a random cat gif!</string>
     <string name="catimg">cute  mis eye colored kitten</string>

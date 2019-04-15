@@ -41,7 +41,7 @@ public class NetworkUtils {
      * Default: results are sorted by best match if no field is specified.
      */
     final static String PARAM_SORT = "sort";
-    final static String sortBy = "cute";
+    final static String sortBy = "name";
 
     /**
      * Builds the URL used to query the cat api.

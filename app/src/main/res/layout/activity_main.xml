@@ -65,6 +65,7 @@
         android:textSize="18sp" />
 
     </ScrollView>
+
     <Button
         android:id="@+id/adopt-button"
         android:layout_width="144dp"

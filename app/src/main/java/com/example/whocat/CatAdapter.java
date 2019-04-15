@@ -134,7 +134,7 @@ public class CatAdapter extends RecyclerView.Adapter<CatAdapter.NumberViewHolder
      * Cache of the children views for a list item.
      */
 
-    // COMPLETED (5) Implement OnClickListener in the NumberViewHolder class
+    // Implement OnClickListener in the NumberViewHolder class
     class NumberViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
